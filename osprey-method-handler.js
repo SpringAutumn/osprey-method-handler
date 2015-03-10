@@ -147,6 +147,7 @@ function queryHandler (queryParameters) {
     var result = validate(query);
 
     if (!result.valid) {
+      req.validationError = result.errors;
       return next(new ValidationError('query', result.errors));
     }
 
@@ -176,6 +177,7 @@ function headerHandler (headerParameters) {
     var result = validate(headers);
 
     if (!result.valid) {
+      req.validationError = result.errors;
       return next(new ValidationError('headers', result.errors));
     }
 
@@ -244,6 +246,7 @@ function jsonBodyValidationHandler (str) {
     var result = tv4.validateMultiple(req.body, schema);
 
     if (!result.valid) {
+      req.validationError = result.errors;
       return next(new ValidationError('json', result.errors));
     }
 
@@ -285,6 +288,7 @@ function urlencodedBodyValidationHandler (parameters) {
     var result = validate(body);
 
     if (!result.valid) {
+      req.validationError = result.errors;
       return next(new ValidationError('form', result.errors));
     }
 
@@ -328,6 +332,7 @@ function xmlBodyValidationHandler (str) {
     var xmlDoc = libxml.parseXml(req.body);
 
     if (!xmlDoc.validate(xsdDoc)) {
+      req.validationError = xmlDoc.validationErrors;
       return next(new ValidationError('xml', xmlDoc.validationErrors));
     }
 

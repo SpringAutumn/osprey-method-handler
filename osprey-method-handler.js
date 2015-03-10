@@ -148,7 +148,8 @@ function queryHandler (queryParameters) {
 
     if (!result.valid) {
       req.validationError = result.errors;
-      return next(new ValidationError('query', result.errors));
+      return next();
+      // return next(new ValidationError('query', result.errors));
     }
 
     var qs = querystring.stringify(query);
@@ -178,7 +179,8 @@ function headerHandler (headerParameters) {
 
     if (!result.valid) {
       req.validationError = result.errors;
-      return next(new ValidationError('headers', result.errors));
+      return next();
+      // return next(new ValidationError('headers', result.errors));
     }
 
     // Unsets invalid headers.
@@ -247,7 +249,8 @@ function jsonBodyValidationHandler (str) {
 
     if (!result.valid) {
       req.validationError = result.errors;
-      return next(new ValidationError('json', result.errors));
+      return next();
+      // return next(new ValidationError('json', result.errors));
     }
 
     return next();
@@ -289,7 +292,8 @@ function urlencodedBodyValidationHandler (parameters) {
 
     if (!result.valid) {
       req.validationError = result.errors;
-      return next(new ValidationError('form', result.errors));
+      return next();
+      // return next(new ValidationError('form', result.errors));
     }
 
     // Discards invalid url encoded parameters.
@@ -333,7 +337,8 @@ function xmlBodyValidationHandler (str) {
 
     if (!xmlDoc.validate(xsdDoc)) {
       req.validationError = xmlDoc.validationErrors;
-      return next(new ValidationError('xml', xmlDoc.validationErrors));
+      return next();
+      // return next(new ValidationError('xml', xmlDoc.validationErrors));
     }
 
     // Assign parsed XML document to the body.

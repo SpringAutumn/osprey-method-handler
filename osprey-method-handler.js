@@ -62,7 +62,7 @@ function ospreyMethodHandler (schema) {
   schema = schema || {};
 
   var app = router();
-
+  app.use(schemaHandler(schema));
   app.use(acceptsHandler(schema.responses));
 
   if (schema.body) {
@@ -73,6 +73,19 @@ function ospreyMethodHandler (schema) {
   app.use(queryHandler(schema.queryParameters));
 
   return app;
+}
+
+/**
+ * Schema Handler.
+ *
+ * @param  {Object}   schema
+ * @return {Function}
+ */
+function schemaHandler (schema) {
+  return function storeSchema (req, res, next) {
+    req.ramlSchema = schema;
+    return next();
+  };
 }
 
 /**
